@@ -256,6 +256,7 @@ class ChewieController extends ChangeNotifier {
     this.fullScreenByDefault = false,
     this.cupertinoProgressColors,
     this.materialProgressColors,
+    this.loadingMessage,
     this.placeholder,
     this.overlay,
     this.showControlsOnInitialize = true,
