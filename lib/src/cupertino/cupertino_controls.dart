@@ -91,37 +91,50 @@ class _CupertinoControlsState extends State<CupertinoControls>
         onTap: () => _cancelAndRestartTimer(),
         child: AbsorbPointer(
           absorbing: notifier.hideStuff,
-          child: Stack(
-            children: [
-              if (_displayBufferingIndicator)
-                const Center(
-                  child: CircularProgressIndicator(),
-                )
-              else
-                _buildHitArea(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  _buildTopBar(
-                    backgroundColor,
-                    iconColor,
-                    barHeight,
-                    buttonPadding,
-                  ),
-                  const Spacer(),
-                  if (_subtitleOn)
-                    Transform.translate(
-                      offset: Offset(
-                        0.0,
-                        notifier.hideStuff ? barHeight * 0.8 : 0.0,
-                      ),
-                      child: _buildSubtitles(chewieController.subtitle!),
+          child: _latestValue.duration == Duration.zero
+                  ? Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const CircularProgressIndicator(),
+                          if(chewieController.loadingMessage != Null) ...[
+                            const SizedBox(height: 16.0),
+                            Text(chewieController.loadingMessage!, style: TextStyle(color: Colors.white)),
+                          ]
+                        ]
+                      )
+                    )
+                  : Stack(
+                      children: [
+                        if (_displayBufferingIndicator)
+                          const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        else
+                          _buildHitArea(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            _buildTopBar(
+                              backgroundColor,
+                              iconColor,
+                              barHeight,
+                              buttonPadding,
+                            ),
+                            const Spacer(),
+                            if (_subtitleOn)
+                              Transform.translate(
+                                offset: Offset(
+                                  0.0,
+                                  notifier.hideStuff ? barHeight * 0.8 : 0.0,
+                                ),
+                                child: _buildSubtitles(chewieController.subtitle!),
+                              ),
+                            _buildBottomBar(backgroundColor, iconColor, barHeight),
+                          ],
+                        ),
+                      ],
                     ),
-                  _buildBottomBar(backgroundColor, iconColor, barHeight),
-                ],
-              ),
-            ],
-          ),
         ),
       ),
     );
