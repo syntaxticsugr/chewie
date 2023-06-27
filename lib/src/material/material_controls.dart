@@ -82,32 +82,45 @@ class _MaterialControlsState extends State<MaterialControls>
         onTap: () => _cancelAndRestartTimer(),
         child: AbsorbPointer(
           absorbing: notifier.hideStuff,
-          child: Stack(
-            children: [
-              if (_displayBufferingIndicator)
-                const Center(
-                  child: CircularProgressIndicator(),
-                )
-              else
-                _buildHitArea(),
-              _buildActionBar(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  if (_subtitleOn)
-                    Transform.translate(
-                      offset: Offset(
-                        0.0,
-                        notifier.hideStuff ? barHeight * 0.8 : 0.0,
-                      ),
-                      child:
-                          _buildSubtitles(context, chewieController.subtitle!),
+          child: _latestValue.duration == Duration.zero
+                  ? Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const CircularProgressIndicator(),
+                          if(chewieController.loadingMessage != Null) ...[
+                            const SizedBox(height: 16.0),
+                            Text(chewieController.loadingMessage!, style: TextStyle(color: Colors.white)),
+                          ]
+                        ]
+                      )
+                    )
+                  : Stack(
+                      children: [
+                        if (_displayBufferingIndicator)
+                          const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        else
+                          _buildHitArea(),
+                        _buildActionBar(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            if (_subtitleOn)
+                              Transform.translate(
+                                offset: Offset(
+                                  0.0,
+                                  notifier.hideStuff ? barHeight * 0.8 : 0.0,
+                                ),
+                                child:
+                                    _buildSubtitles(context, chewieController.subtitle!),
+                              ),
+                            _buildBottomBar(context),
+                          ],
+                        ),
+                      ],
                     ),
-                  _buildBottomBar(context),
-                ],
-              ),
-            ],
-          ),
         ),
       ),
     );
