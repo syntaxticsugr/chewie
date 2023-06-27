@@ -305,6 +305,7 @@ class ChewieController extends ChangeNotifier {
     bool? fullScreenByDefault,
     ChewieProgressColors? cupertinoProgressColors,
     ChewieProgressColors? materialProgressColors,
+    String? loadingMessage,
     Widget? placeholder,
     Widget? overlay,
     bool? showControlsOnInitialize,
@@ -355,6 +356,7 @@ class ChewieController extends ChangeNotifier {
           cupertinoProgressColors ?? this.cupertinoProgressColors,
       materialProgressColors:
           materialProgressColors ?? this.materialProgressColors,
+      loadingMessage: loadingMessage ?? this.loadingMessage,
       placeholder: placeholder ?? this.placeholder,
       overlay: overlay ?? this.overlay,
       showControlsOnInitialize:
@@ -480,6 +482,9 @@ class ChewieController extends ChangeNotifier {
   /// The colors to use for the Material Progress Bar. By default, the Material
   /// player uses the colors from your Theme.
   final ChewieProgressColors? materialProgressColors;
+
+  /// Displays a custom Loading Message while the video is being loaded
+  final String? loadingMessage;
 
   /// The placeholder is displayed underneath the Video before it is initialized
   /// or played.
